@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حلم البلايستيشن 5 | صفحة التمويل الشخصي</title>
+    
+    <!-- استدعاء خط Cairo من Google Fonts لدعم اللغة العربية بشكل عصري وأنيق -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- استدعاء مكتبة Tailwind CSS للتنسيق المتجاوب -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- استدعاء أيقونات Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- إعدادات Tailwind المخصصة لألوان بلايستيشن والخطوط -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                    },
+                    colors: {
+                        psDark: '#050814',
+                        psNavy: '#0a1026',
+                        psBlue: '#0070d1',
+                        psCyan: '#00f2ff',
+                        psCard: 'rgba(15, 23, 42, 0.75)',
+                    },
+                    boxShadow: {
+                        'neon-blue': '0 0 20px rgba(0, 112, 209, 0.5)',
+                        'neon-cyan': '0 0 25px rgba(0, 242, 255, 0.4)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* تنسيقات أساسية وتأثيرات بصرية مخصصة */
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #050814;
+            color: #f8fafc;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(0, 112, 209, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(0, 242, 255, 0.1) 0%, transparent 40%);
+        }
+
+        /* تأثير الزجاج (Glassmorphism) للبطاقات */
+        .glass-card {
+            background: rgba(13, 20, 44, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 242, 255, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(0, 242, 255, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(0, 112, 209, 0.3);
+        }
+
+        /* حركة عائمة لرموز البلايستيشن في الخلفية */
+        @keyframes floatSymbol {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        .floating-symbol {
+            animation: floatSymbol 6s ease-in-out infinite;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        /* شريط التقدم المتوهج */
+        .progress-glow {
+            background: linear-gradient(90deg, #0070d1 0%, #00f2ff 100%);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.6);
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* تنسيق شريط التمرير */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050814;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0070d1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f2ff;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col justify-between selection:bg-psBlue selection:text-white">
+
+    <!-- رموز البلايستيشن الزخرفية في الخلفية (△ ○ × □) -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0 opacity-15">
+        <!-- مثلث -->
+        <svg class="floating-symbol absolute top-16 right-10 w-16 h-16 text-emerald-400" style="animation-delay: 0s;" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6">
+            <polygon points="50,15 90,85 10,85" />
+        </svg>
+        <!-- دائرة -->
+        <svg class="floating-symbol absolute top-1/3 left-12 w-14 h-14 text-rose-500" style="animation-delay: 1.5s;" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6">
+            <circle cx="50" cy="50" r="38" />
+        </svg>
+        <!-- إكس -->
+        <svg class="floating-symbol absolute bottom-1/4 right-16 w-14 h-14 text-psCyan" style="animation-delay: 3s;" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6">
+            <line x1="20" y1="20" x2="80" y2="80" />
+            <line x1="80" y1="20" x2="20" y2="80" />
+        </svg>
+        <!-- مربع -->
+        <svg class="floating-symbol absolute bottom-16 left-20 w-16 h-16 text-fuchsia-400" style="animation-delay: 4.5s;" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="6">
+            <rect x="20" y="20" width="60" height="60" rx="6" />
+        </svg>
+    </div>
+
+    <!-- شريط التنقل العلوي (Navbar) -->
+    <header class="sticky top-0 z-40 glass-card border-b border-psCyan/10 border-t-0 border-x-0 rounded-none">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-psBlue to-psCyan flex items-center justify-center shadow-neon-blue">
+                    <i class="fa-brands fa-playstation text-white text-2xl"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg tracking-wide text-white block leading-none">حلم PS5</span>
+                    <span class="text-xs text-psCyan font-semibold">تمويل شخصي شفاف 100%</span>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-300">
+                <a href="#progress" class="hover:text-psCyan transition-colors">التقدم المالي</a>
+                <a href="#story" class="hover:text-psCyan transition-colors">قصتي بصراحة</a>
+                <a href="#donate" class="hover:text-psCyan transition-colors">طرق الدعم</a>
+                <a href="#supporters" class="hover:text-psCyan transition-colors">لوحة الداعمين</a>
+            </nav>
+
+            <a href="#donate" class="bg-psBlue hover:bg-blue-600 text-white text-sm font-bold px-4 py-2.5 rounded-xl shadow-neon-blue transition-all transform hover:scale-105">
+                ادعم الحلم <i class="fa-solid fa-gamepad mr-1"></i>
+            </a>
+        </div>
+    </header>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="relative z-10 flex-grow">
+        
+        <!-- 1. قسم البداية (Hero Section) -->
+        <section class="pt-12 pb-16 md:pt-20 md:pb-24 px-4 sm:px-6 max-w-6xl mx-auto text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-psBlue/20 border border-psCyan/30 text-psCyan text-xs sm:text-sm font-bold mb-6">
+                <span class="w-2 h-2 rounded-full bg-psCyan animate-ping"></span>
+                هدف شخصي واضح بدون أي ادعاءات خيرية
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-6">
+                ساعدني أحقق حلمي واشتري
+                <span class="block mt-2 text-transparent bg-clip-text bg-gradient-to-r from-psBlue via-psCyan to-blue-400">
+                    PlayStation 5!
+                </span>
+            </h1>
+
+            <p class="max-w-2xl mx-auto text-slate-300 text-base sm:text-lg leading-relaxed mb-10">
+                أهلاً بك في صفحتي الشخصية! بكل صراحة ووضوح، هذا الموقع مخصص لجمع التبرعات والمساهمات البسيطة لمساعدتي في شراء جهاز <strong>بلايستيشن 5</strong>. لا توجد هنا أي جمعيات أو قصص وهمية—فقط شاب شغوف بعالم الألعاب يشارك حلمه مع مجتمع الجيمرز الطيبين.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#donate" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-psBlue to-cyan-500 hover:from-blue-600 hover:to-cyan-400 text-white font-extrabold text-lg shadow-neon-cyan transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                    <span>ادعم الحلم الآن</span>
+                    <i class="fa-solid fa-rocket"></i>
+                </a>
+                <a href="#story" class="w-full sm:w-auto px-8 py-4 rounded-2xl glass-card hover:bg-slate-800/80 text-slate-200 font-bold text-lg transition-all flex items-center justify-center gap-2">
+                    <span>اقرأ قصتي أولاً</span>
+                    <i class="fa-solid fa-book-open text-psCyan"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. قسم متابعة التقدم المالي (Funding Progress Tracker) -->
+        <section id="progress" class="py-8 px-4 sm:px-6 max-w-4xl mx-auto">
+            <div class="glass-card rounded-3xl p-6 sm:p-10 relative overflow-hidden">
+                <!-- إضاءة خلفية خفيفة -->
+                <div class="absolute -top-24 -left-24 w-48 h-48 bg-psBlue/20 rounded-full blur-3xl"></div>
+
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+                    <div>
+                        <span class="text-psCyan text-sm font-bold uppercase tracking-wider">حالة جمع التمويل</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-1">كم تبقى للوصول للهدف؟</h2>
+                    </div>
+                    <div class="text-right sm:text-left">
+                        <span id="percentageText" class="text-3xl sm:text-4xl font-black text-psCyan">0%</span>
+                        <span class="text-slate-400 text-sm block">مكتمل حتى الآن</span>
+                    </div>
+                </div>
+
+                <!-- شريط التقدم التفاعلي -->
+                <div class="w-full h-6 bg-slate-900/90 rounded-full p-1 border border-slate-700/80 mb-6 overflow-hidden">
+                    <div id="progressBar" class="h-full rounded-full progress-glow" style="width: 0%;"></div>
+                </div>
+
+                <!-- إحصائيات الأرقام -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+                    <div class="bg-slate-900/60 rounded-2xl p-4 border border-slate-800 text-center">
+                        <span class="text-slate-400 text-xs font-semibold block mb-1">المبلغ المجمّع حالياً</span>
+                        <span id="raisedAmountDisplay" class="text-xl sm:text-2xl font-extrabold text-emerald-400">0 ج.م</span>
+                        <span class="text-xs text-slate-500 block mt-0.5">بداية الرحلة نحو الحلم</span>
+                    </div>
+                    <div class="bg-slate-900/60 rounded-2xl p-4 border border-slate-800 text-center">
+                        <span class="text-slate-400 text-xs font-semibold block mb-1">الهدف المطلوب للجهاز</span>
+                        <span id="targetAmountDisplay" class="text-xl sm:text-2xl font-extrabold text-white">45,000 ج.م</span>
+                        <span class="text-xs text-slate-500 block mt-0.5">سعر PS5 وملحقاته</span>
+                    </div>
+                    <div class="bg-slate-900/60 rounded-2xl p-4 border border-slate-800 text-center">
+                        <span class="text-slate-400 text-xs font-semibold block mb-1">عدد الداعمين الأبطال</span>
+                        <span id="supportersCountDisplay" class="text-xl sm:text-2xl font-extrabold text-psCyan">0 داعم</span>
+                        <span class="text-xs text-slate-500 block mt-0.5">كن أول داعم في اللوحة!</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. قسم القصة والشفافية (The Story Section) -->
+        <section id="story" class="py-12 px-4 sm:px-6 max-w-4xl mx-auto">
+            <div class="glass-card rounded-3xl p-6 sm:p-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-psBlue/20 border border-psBlue/40 flex items-center justify-center text-psCyan text-xl">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">قصتي بكل صراحة</h2>
+                        <p class="text-slate-400 text-sm">لماذا أنشأت هذه الصفحة؟</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-slate-300 leading-relaxed text-base sm:text-lg">
+                    <p>
+                        مرحباً يا أصدقاء! أنا طالب جامعي وشغوف جداً بعالم ألعاب الفيديو منذ طفولتي. خلال السنوات الماضية، ومع ضغوط الدراسة الجامعية وتكاليف المعيشة وارتفاع أسعار الأجهزة الإلكترونية، أصبح شراء جهاز <strong>PlayStation 5</strong> حلماً صعب المنال بميزانيتي الحالية.
+                    </p>
+                    <p>
+                        فكرت بدلاً من الاستسلام، أن أشارككم هذا الهدف الشخصي بشفافية مطلقة. إذا كنت من محبي الألعاب وتعرف شعور امتلاك جهاز جديد وتجربة ألعاب الجيل الجديد، أو كنت ترغب في إدخال البهجة على شخص بمساهمة بسيطة (حتى لو بثمن كوب قهوة)، فدعمك هنا سيصنع فارقاً حقيقياً.
+                    </p>
+                    <div class="p-4 rounded-2xl bg-psBlue/10 border border-psBlue/30 text-sm text-cyan-200 flex items-start gap-3 mt-4">
+                        <i class="fa-solid fa-shield-halved text-psCyan text-lg mt-0.5"></i>
+                        <span>
+                            <strong>ميثاق الشفافية:</strong> كل جنيه أو دولار يتم إرساله هنا يذهب مباشرة لحصالة شراء الجهاز، وسأقوم بتحديث شريط التقدم أولاً بأول ونشر صورة الجهاز فور شرائه بفضلكم!
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. قسم خيارات التبرع والدعم التفاعلي (Donation & Support Section) -->
+        <section id="donate" class="py-12 px-4 sm:px-6 max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="text-psCyan text-sm font-bold">اختر طريقتك في الدعم</span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-1">كن جزءاً من تحقيق الحلم</h2>
+                <p class="text-slate-400 mt-2 max-w-xl mx-auto text-sm sm:text-base">اختر باقة دعم جاهزة أو اكتب أي مبلغ يناسبك، ثم استخدم إحدى وسائل التحويل بالأسفل.</p>
+            </div>
+
+            <!-- باقات الدعم التفاعلية -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <!-- باقة 1 -->
+                <button type="button" onclick="selectTier(50, this)" class="tier-btn glass-card rounded-2xl p-5 text-right flex flex-col justify-between hover:border-psCyan focus:outline-none">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-2xl">☕</span>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300">بداية لطيفة</span>
+                        </div>
+                        <h3 class="font-bold text-white text-lg">كوباية قهوة للجيمر</h3>
+                        <p class="text-slate-400 text-xs mt-1">مساهمة رمزية ترفع المعنويات وتقربني خطوة.</p>
+                    </div>
+                    <div class="mt-5 pt-3 border-t border-slate-800 flex items-center justify-between">
+                        <span class="text-xl font-black text-psCyan">50 ج.م</span>
+                        <span class="text-xs text-slate-400">اختر <i class="fa-solid fa-arrow-left mr-1"></i></span>
+                    </div>
+                </button>
+
+                <!-- باقة 2 -->
+                <button type="button" onclick="selectTier(200, this)" class="tier-btn glass-card rounded-2xl p-5 text-right flex flex-col justify-between border-psCyan/50 bg-psBlue/10 hover:border-psCyan focus:outline-none">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-2xl">🎮</span>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-psBlue text-white">الأكثر اختياراً</span>
+                        </div>
+                        <h3 class="font-bold text-white text-lg">دعم أساسي</h3>
+                        <p class="text-slate-300 text-xs mt-1">دفعة قوية جداً في رصيد الجهاز، شكراً يا بطل!</p>
+                    </div>
+                    <div class="mt-5 pt-3 border-t border-slate-700/70 flex items-center justify-between">
+                        <span class="text-xl font-black text-psCyan">200 ج.م</span>
+                        <span class="text-xs text-psCyan font-bold">مختار <i class="fa-solid fa-check mr-1"></i></span>
+                    </div>
+                </button>
+
+                <!-- باقة 3 -->
+                <button type="button" onclick="selectTier(500, this)" class="tier-btn glass-card rounded-2xl p-5 text-right flex flex-col justify-between hover:border-psCyan focus:outline-none">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-2xl">🏆</span>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-amber-500/20 text-amber-300">VIP</span>
+                        </div>
+                        <h3 class="font-bold text-white text-lg">دعم أسطوري</h3>
+                        <p class="text-slate-400 text-xs mt-1">أنت من أساطير الداعمين وسيتم تثبيت اسمك في القمة.</p>
+                    </div>
+                    <div class="mt-5 pt-3 border-t border-slate-800 flex items-center justify-between">
+                        <span class="text-xl font-black text-amber-400">500 ج.م</span>
+                        <span class="text-xs text-slate-400">اختر <i class="fa-solid fa-arrow-left mr-1"></i></span>
+                    </div>
+                </button>
+
+                <!-- مبلغ مخصص -->
+                <div class="glass-card rounded-2xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="text-2xl">✨</span>
+                            <span class="text-xs font-bold px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300">حر</span>
+                        </div>
+                        <h3 class="font-bold text-white text-lg">مبلغ مخصص</h3>
+                        <p class="text-slate-400 text-xs mt-1">اكتب أي مبلغ تحب تساهم بيه (بالجنيه المصري).</p>
+                    </div>
+                    <div class="mt-4">
+                        <div class="relative">
+                            <input type="number" id="customAmountInput" min="5" placeholder="مثال: 100" oninput="handleCustomAmount(this.value)"
+                                class="w-full bg-slate-900/90 border border-slate-700 focus:border-psCyan rounded-xl px-3 py-2.5 text-white font-bold text-sm focus:outline-none">
+                            <span class="absolute left-3 top-2.5 text-xs text-slate-400 font-bold">ج.م</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- وسائل الدفع المحلية والدولية + نموذج تسجيل الدعم في اللوحة -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                
+                <!-- العمود الأيمن: وسائل التحويل المباشر -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-extrabold text-white mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-wallet text-psCyan"></i>
+                            طرق إرسال الدعم المباشر (مصر)
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-6">
+                            المبلغ المختار حالياً: <span id="selectedAmountLabel" class="text-psCyan font-extrabold text-base">200 ج.م</span>
+                        </p>
+
+                        <div class="space-y-4">
+                            <!-- فودافون كاش -->
+                            <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-11 h-11 rounded-xl bg-red-600/20 border border-red-500/40 flex items-center justify-center text-red-500 font-black">
+                                        VF
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-slate-400 block">فودافون كاش (Vodafone Cash)</span>
+                                        <span id="vfNumber" class="font-mono font-bold text-white text-base sm:text-lg tracking-wider" dir="ltr">01093808512</span>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="copyToClipboard('01093808512', 'تم نسخ رقم فودافون كاش (01093808512) بنجاح!')" 
+                                    class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-psBlue text-white text-xs font-bold transition-colors flex items-center justify-center gap-2">
+                                    <i class="fa-regular fa-copy"></i> نسخ الرقم
+                                </button>
+                            </div>
+
+                            <!-- إنستا باي -->
+                            <div class="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-11 h-11 rounded-xl bg-purple-600/20 border border-purple-500/40 flex items-center justify-center text-purple-400 font-black">
+                                        IP
+                                    </div>
+                                    <div>
+                                        <span class="text-xs text-slate-400 block">إنستا باي (التحويل برقم الهاتف)</span>
+                                        <span id="ipNumber" class="font-mono font-bold text-white text-base sm:text-lg tracking-wider" dir="ltr">01093808512</span>
+                                    </div>
+                                </div>
+                                <button type="button" onclick="copyToClipboard('01093808512', 'تم نسخ رقم إنستا باي (01093808512) بنجاح!')" 
+                                    class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-psBlue text-white text-xs font-bold transition-colors flex items-center justify-center gap-2">
+                                    <i class="fa-regular fa-copy"></i> نسخ الرقم
+                                </button>
+                            </div>
+
+                            <!-- تنبيه توضيحي لطريقة التحويل -->
+                            <div class="p-3.5 rounded-2xl bg-slate-900/50 border border-slate-800/80 text-xs text-slate-300 leading-relaxed flex items-start gap-2.5">
+                                <i class="fa-solid fa-circle-info text-psCyan text-base mt-0.5"></i>
+                                <span>
+                                    يمكنك التحويل من أي محفظة إلكترونية (فودافون، اتصالات، أورنج، وي) أو عبر تطبيق <strong>InstaPay</strong> باختيار التحويل إلى "رقم هاتف / محفظة إلكترونية" وإدخال الرقم أعلاه.
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-emerald-400/90 mt-6 flex items-center gap-1.5 font-semibold">
+                        <i class="fa-solid fa-circle-check"></i> بيانات التحويل مفعّلة ومحدثة وجاهزة للاستقبال.
+                    </p>
+                </div>
+
+                <!-- العمود الأيسر: محاكاة تسجيل الدعم في لوحة الداعمين -->
+                <div class="glass-card rounded-3xl p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-xl font-extrabold text-white mb-2 flex items-center gap-2">
+                            <i class="fa-solid fa-pen-to-square text-psCyan"></i>
+                            سجّل اسمك في لوحة الداعمين
+                        </h3>
+                        <p class="text-slate-400 text-sm mb-6">
+                            بعد إرسال دعمك (أو لتجربة تفاعل الصفحة)، اكتب اسمك ورسالة تشجيعية لتظهر فوراً في لوحة الشرف بالأسفل وتحديث شريط التقدم!
+                        </p>
+
+                        <form id="supporterForm" onsubmit="logSupport(event)" class="space-y-4">
+                            <div>
+                                <label for="supporterName" class="block text-xs font-bold text-slate-300 mb-1.5">الاسم أو اللقب (اختياري)</label>
+                                <input type="text" id="supporterName" placeholder="مثال: أحمد - جيمر مصري" 
+                                    class="w-full bg-slate-900/90 border border-slate-700 focus:border-psCyan rounded-xl px-4 py-3 text-white text-sm focus:outline-none">
+                            </div>
+
+                            <div>
+                                <label for="supporterMessage" class="block text-xs font-bold text-slate-300 mb-1.5">رسالة تشجيعية</label>
+                                <textarea id="supporterMessage" rows="3" placeholder="اكتب كلمة حلوة أو اسم لعبة تنصحني ألعبها أول ما أشتري الجهاز..." required
+                                    class="w-full bg-slate-900/90 border border-slate-700 focus:border-psCyan rounded-xl px-4 py-3 text-white text-sm focus:outline-none resize-none"></textarea>
+                            </div>
+
+                            <button type="submit" 
+                                class="w-full py-3.5 rounded-xl bg-gradient-to-r from-psBlue to-cyan-500 hover:from-blue-600 hover:to-cyan-400 text-white font-extrabold text-base shadow-neon-blue transition-all transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-star"></i>
+                                <span>سجل دعمك الآن (<span id="btnAmountText">200</span> ج.م)</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. قسم لوحة الداعمين (Supporters Wall) -->
+        <section id="supporters" class="py-12 pb-20 px-4 sm:px-6 max-w-5xl mx-auto">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <span class="text-psCyan text-sm font-bold">شكراً من القلب</span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white">لوحة الداعمين الأبطال</h2>
+                </div>
+                <span class="px-3 py-1 rounded-full bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700">
+                    تحديث مباشر ⚡
+                </span>
+            </div>
+
+            <div id="supportersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- رسالة ترحيبية تظهر عند عدم وجود داعمين مسجلين بعد -->
+                <div id="emptySupportersMsg" class="col-span-full glass-card rounded-2xl p-8 text-center border border-dashed border-slate-700">
+                    <div class="w-12 h-12 rounded-full bg-psBlue/20 text-psCyan flex items-center justify-center mx-auto mb-3 text-xl">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h4 class="text-white font-bold text-base mb-1">لوحة الشرف بانتظار أول بطل!</h4>
+                    <p class="text-slate-400 text-xs sm:text-sm">سجّل اسمك ورسالتك في النموذج أعلاه ليظهر اسمك هنا كأول داعم للحلم.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- تذييل الصفحة (Footer) -->
+    <footer class="relative z-10 border-t border-slate-800/80 bg-psNavy/90 py-8 px-4 sm:px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex items-center justify-center gap-2 text-white font-extrabold text-lg mb-2">
+                <i class="fa-brands fa-playstation text-psCyan"></i>
+                <span>حملة التمويل الشخصي لشراء PS5</span>
+            </div>
+            <p class="text-slate-400 text-xs sm:text-sm max-w-xl mx-auto leading-relaxed mb-4">
+                إخلاء مسؤولية وشفافية: هذه الصفحة هي مبادرة تمويل جماعي شخصية فردية بهدف شراء جهاز ألعاب إلكتروني، وليست تابعة لأي مؤسسة خيرية. جميع المساهمات تتم طواعية وبمحض إرادة الداعم.
+            </p>
+            <div class="text-xs text-slate-500">
+                صُنع بشغف لعالم الألعاب &copy; <span id="currentYear"></span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- إشعار منبثق (Toast Notification) بديل عن alert() -->
+    <div id="toastNotification" class="fixed bottom-6 left-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-slate-900 border border-psCyan text-white px-5 py-3.5 rounded-2xl shadow-neon-cyan flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-psCyan/20 text-psCyan flex items-center justify-center">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <span id="toastMessage" class="text-sm font-bold">تمت العملية بنجاح!</span>
+        </div>
+    </div>
+
+    <!-- كود JavaScript للتفاعلية -->
+    <script>
+        // =========================================================================
+        // إعدادات التمويل الأساسية (يمكنك تعديل المبلغ الأساسي يدوياً من هنا مستقبلاً)
+        // =========================================================================
+        const TARGET_AMOUNT = 45000; // الهدف الكلي: 45 ألف جنيه مصري
+        const BASE_RAISED = 0;       // المبلغ المجمّع الأساسي (عدّله يدوياً كلما وصلك تحويل حقيقي)
+        const BASE_SUPPORTERS = 0;   // عدد الداعمين الأساسي
+        const STORAGE_KEY = 'ps5_dream_supporters_v1'; // مفتاح الحفظ المحلي في المتصفح
+
+        let selectedAmount = 200;    // المبلغ المختار افتراضياً في الباقات
+        let savedSupporters = [];    // مصفوفة الداعمين المحفوظين محلياً
+
+        // تعيين السنة الحالية في الفوتر
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // تحميل البيانات المحفوظة عند فتح الصفحة
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSavedData();
+            updateProgressUI();
+            renderSupportersWall();
+        });
+
+        // دالة استرجاع البيانات من localStorage
+        function loadSavedData() {
+            try {
+                const rawData = localStorage.getItem(STORAGE_KEY);
+                if (rawData) {
+                    savedSupporters = JSON.parse(rawData);
+                }
+            } catch (e) {
+                savedSupporters = [];
+            }
+        }
+
+        // دالة حفظ البيانات في localStorage
+        function saveSupportersData() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(savedSupporters));
+            } catch (e) {
+                console.warn('تعذر الحفظ في المتصفح');
+            }
+        }
+
+        // تحديث شريط التقدم والإحصائيات بناءً على المبلغ الأساسي + المساهمات المسجلة
+        function updateProgressUI() {
+            const loggedTotal = savedSupporters.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+            const totalRaised = BASE_RAISED + loggedTotal;
+            const totalSupporters = BASE_SUPPORTERS + savedSupporters.length;
+
+            const rawPercentage = Math.round((totalRaised / TARGET_AMOUNT) * 100);
+            const barWidth = Math.min(rawPercentage, 100);
+
+            document.getElementById('raisedAmountDisplay').textContent = `${totalRaised.toLocaleString('en-US')} ج.م`;
+            document.getElementById('targetAmountDisplay').textContent = `${TARGET_AMOUNT.toLocaleString('en-US')} ج.م`;
+            document.getElementById('supportersCountDisplay').textContent = `${totalSupporters} داعم`;
+            document.getElementById('percentageText').textContent = `${rawPercentage}%`;
+            document.getElementById('progressBar').style.width = `${barWidth}%`;
+        }
+
+        // عرض قائمة الداعمين في لوحة الشرف
+        function renderSupportersWall() {
+            const supportersList = document.getElementById('supportersList');
+            const emptyMsg = document.getElementById('emptySupportersMsg');
+
+            if (savedSupporters.length === 0) {
+                if (emptyMsg) emptyMsg.classList.remove('hidden');
+                return;
+            }
+
+            if (emptyMsg) emptyMsg.classList.add('hidden');
+            supportersList.innerHTML = '';
+
+            // عرض الداعمين من الأحدث إلى الأقدم
+            [...savedSupporters].reverse().forEach((supporter) => {
+                const card = createSupporterCard(supporter);
+                supportersList.appendChild(card);
+            });
+        }
+
+        // إنشاء عنصر بطاقة داعم
+        function createSupporterCard(supporter) {
+            const firstLetter = supporter.name.charAt(0);
+            const isVIP = supporter.amount >= 500;
+            const borderClass = isVIP ? 'border-r-amber-400' : 'border-r-psCyan';
+            const badgeClass = isVIP ? 'bg-amber-500/15 text-amber-300' : 'bg-emerald-500/15 text-emerald-400';
+
+            const card = document.createElement('div');
+            card.className = `glass-card rounded-2xl p-5 border-r-4 ${borderClass} transition-all duration-300`;
+            card.innerHTML = `
+                <div class="flex items-center justify-between mb-2">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 rounded-full bg-psCyan/20 text-psCyan flex items-center justify-center font-bold text-sm">
+                            ${escapeHTML(firstLetter)}
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-white text-sm">${escapeHTML(supporter.name)}</h4>
+                            <span class="text-[11px] text-slate-400">${escapeHTML(supporter.timeLabel || 'مساهمة مسجلة')}</span>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-lg ${badgeClass} font-extrabold text-xs">
+                        ${Number(supporter.amount).toLocaleString('en-US')} ج.م
+                    </span>
+                </div>
+                <p class="text-slate-300 text-xs sm:text-sm leading-relaxed mt-3">
+                    "${escapeHTML(supporter.message)}"
+                </p>
+            `;
+            return card;
+        }
+
+        // دالة إظهار الإشعار المنبثق (Toast)
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            
+            toastMsg.textContent = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3500);
+        }
+
+        // دالة نسخ النصوص إلى الحافظة (متوافقة مع جميع المتصفحات والـ iFrames)
+        function copyToClipboard(text, successMessage) {
+            const tempInput = document.createElement('textarea');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMessage);
+            } catch (err) {
+                showToast('تعذر النسخ تلقائياً، يرجى النسخ يدوياً.');
+            }
+            document.body.removeChild(tempInput);
+        }
+
+        // دالة اختيار باقة دعم جاهزة
+        function selectTier(amount, clickedBtn) {
+            selectedAmount = amount;
+            document.getElementById('customAmountInput').value = '';
+            updateSelectedAmountUI();
+
+            // تحديث الشكل البصري للأزرار
+            document.querySelectorAll('.tier-btn').forEach(btn => {
+                btn.classList.remove('border-psCyan/50', 'bg-psBlue/10');
+            });
+            if (clickedBtn) {
+                clickedBtn.classList.add('border-psCyan/50', 'bg-psBlue/10');
+            }
+        }
+
+        // دالة التعامل مع إدخال مبلغ مخصص
+        function handleCustomAmount(val) {
+            const num = parseFloat(val);
+            if (!isNaN(num) && num > 0) {
+                selectedAmount = num;
+                document.querySelectorAll('.tier-btn').forEach(btn => {
+                    btn.classList.remove('border-psCyan/50', 'bg-psBlue/10');
+                });
+                updateSelectedAmountUI();
+            }
+        }
+
+        // تحديث النصوص التي تعرض المبلغ المختار حالياً
+        function updateSelectedAmountUI() {
+            document.getElementById('selectedAmountLabel').textContent = `${selectedAmount.toLocaleString('ar-EG')} ج.م`;
+            document.getElementById('btnAmountText').textContent = selectedAmount.toLocaleString('ar-EG');
+        }
+
+        // دالة تسجيل الدعم وتحديث شريط التقدم ولوحة الداعمين
+        function logSupport(event) {
+            event.preventDefault();
+
+            const nameInput = document.getElementById('supporterName');
+            const messageInput = document.getElementById('supporterMessage');
+
+            const supporterName = nameInput.value.trim() || 'جيمر مجهول الهوية';
+            const supporterMessage = messageInput.value.trim();
+
+            if (!supporterMessage) return;
+
+            // إضافة المساهمة وحفظها في المتصفح
+            const newSupporter = {
+                name: supporterName,
+                amount: selectedAmount,
+                message: supporterMessage,
+                timeLabel: new Date().toLocaleDateString('ar-EG', { month: 'short', day: 'numeric' })
+            };
+
+            savedSupporters.push(newSupporter);
+            saveSupportersData();
+
+            // تحديث الواجهة بالكامل
+            updateProgressUI();
+            renderSupportersWall();
+
+            // تفريغ الحقول وإظهار إشعار شكر
+            nameInput.value = '';
+            messageInput.value = '';
+            showToast(`شكراً يا ${supporterName}! تم تسجيل دعمك وحفظه في اللوحة.`);
+
+            // التمرير السلس لرؤية الاسم في لوحة الداعمين
+            document.getElementById('supporters').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // دالة حماية النصوص المدخلة من أكواد XSS
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag]));
+        }
+    </script>
+</body>
+</html>
